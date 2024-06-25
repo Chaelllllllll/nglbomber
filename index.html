@@ -31,7 +31,8 @@
                 <label for="quantity">Number of Messages:</label>
                 <input type="number" class="form-control" id="quantity" placeholder="Enter quantity">
             </div>
-            <button type="submit" class="btn btn-warning w-100">Send Message</button>
+            <button type="button" class="btn btn-success w-100" id="startButton">Start</button>
+            <button type="button" class="btn btn-danger w-100 mt-2" id="stopButton">Stop</button>
         </form>
     </div>
 
@@ -44,10 +45,9 @@
     <!-- Custom JavaScript -->
     <script>
         $(document).ready(function() {
-            // Handle form submission
-            $('#messageForm').submit(function(event) {
-                event.preventDefault(); // Prevent default form submission
+            let intervalId;
 
+            function sendMessage() {
                 // Gather form data
                 var recipientUsername = $('#recipientUsername').val();
                 var messageContent = $('#messageContent').val();
@@ -86,6 +86,14 @@
                         }, 5000);
                     }
                 });
+            }
+
+            $('#startButton').click(function() {
+                intervalId = setInterval(sendMessage, 1000); // Send message every 1 second
+            });
+
+            $('#stopButton').click(function() {
+                clearInterval(intervalId); // Stop sending messages
             });
         });
     </script>
